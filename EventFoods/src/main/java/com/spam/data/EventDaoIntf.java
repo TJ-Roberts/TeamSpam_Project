@@ -1,10 +1,10 @@
-package com.spam.eventFoods.data;
+package com.spam.data;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.spam.eventFoods.models.Event;
+import com.spam.models.Event;
 
 @Repository
 public interface EventDaoIntf {
@@ -27,7 +27,7 @@ public interface EventDaoIntf {
 	 * @param id id of the event to remove
 	 * @return true if the event was removed, false otherwise
 	 */
-	boolean delByInd(int id);
+	boolean delById(int id);
 	
 	/**
 	 * Updates the specified event with the given information.
@@ -45,4 +45,6 @@ public interface EventDaoIntf {
 	 * @return the added event
 	 */
 	Event addNewEvent(Event event);
+	
+	List<Event> getEventsByOrganizer(int organizerId);
 }

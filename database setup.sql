@@ -20,7 +20,7 @@ create table events
     eventTime varchar(16) not null,
     eventDate varchar(16) not null,
     eventTitle varchar(32) not null,
-    descripton varchar(64),
+    description varchar(64),
     foodType varchar(32),
     organization varchar(32),
     FOREIGN KEY (organizerId) references organizers(organizerId)

@@ -1,8 +1,10 @@
-package com.spam.eventFoods.data;
+package com.spam.data;
+
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.spam.eventFoods.models.Organizer;
+import com.spam.models.Organizer;
 
 @Repository
 public interface OrganizerDaoIntf {
@@ -14,4 +16,10 @@ public interface OrganizerDaoIntf {
 	 * @return the added organizer
 	 */
 	Organizer addNewOrganizer(Organizer organizer);
+	
+	boolean updateOrganizer(Organizer organizer);
+	
+	boolean delById(int id);
+	
+	List<Organizer> getAllOrganizers();
 }

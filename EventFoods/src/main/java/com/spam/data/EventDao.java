@@ -1,4 +1,4 @@
-package com.spam.eventFoods.data;
+package com.spam.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import com.spam.eventFoods.models.Event;
+import com.spam.models.Event;
 
 @Repository
 public class EventDao implements EventDaoIntf {
@@ -38,6 +38,9 @@ public class EventDao implements EventDaoIntf {
 			newEvent.setEventTime(rs.getString("eventTime"));
 			newEvent.setEventTitle(rs.getString("eventTitle"));
 			newEvent.setLocation(rs.getString("location"));
+			newEvent.setDescription(rs.getString("description"));
+			newEvent.setFoodType(rs.getString("foodType"));
+			newEvent.setOrganization(rs.getString("organization"));
 			
 			return newEvent;
 		}
@@ -54,7 +57,7 @@ public class EventDao implements EventDaoIntf {
 	}
 
 	@Override
-	public boolean delByInd(int id) {
+	public boolean delById(int id) {
 		int rows = jdbc_template.update("DELETE FROM events WHERE eventId = ?", id);
 		return rows != 0 ? true : false;
 	}
@@ -62,11 +65,13 @@ public class EventDao implements EventDaoIntf {
 	@Override
 	public boolean updateEvent(Event event) {
 		int rows = jdbc_template.update("UPDATE events "
-					+ "SET location = ?, eventTime = ?, eventDate = ?, eventTitle = ? "
+					+ "SET location = ?, eventTime = ?, eventDate = ?, eventTitle = ?, "
+					+ "description = ?, foodType = ?, organization = ? "
 					+ "WHERE eventId = ?", 
 					event.getLocation(), event.getEventTime(), 
 					event.getEventDate(), event.getEventTitle(), 
-					event.getEventId());
+					event.getDescription(), event.getFoodType(),
+					event.getOrganization(), event.getEventId());
 		
 		return rows != 0 ? true : false;
 	}
@@ -78,12 +83,20 @@ public class EventDao implements EventDaoIntf {
 				.addValue("eventDate", event.getEventDate())
 		        .addValue("eventTime", event.getEventTime())
 		        .addValue("eventTitle", event.getEventTitle())
-		        .addValue("organizerId", event.getOrganizerId());
+		        .addValue("organizerId", event.getOrganizerId())
+		        .addValue("description", event.getDescription())
+		        .addValue("foodType", event.getFoodType())
+		        .addValue("organization", event.getOrganization());
 		
 		// adds the event and returns the value of the auto_increment column
 		Number id = simpleJdbcInsert.executeAndReturnKey(params);
 		event.setEventId(id.intValue());
 		return event; // event object is returned with the generated id
+	}
+
+	@Override
+	public List<Event> getEventsByOrganizer(int organizerId) {
+		return jdbc_template.query("SELECT * FROM events WHERE organizerId = ?", new EventMapper(), organizerId);
 	}
 
 }
