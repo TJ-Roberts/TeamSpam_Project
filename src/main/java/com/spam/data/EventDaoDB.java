@@ -54,7 +54,7 @@ public class EventDaoDB implements EventDao {
     }
 
     @Override
-    public boolean delByInd(int id) {
+    public boolean delById(int id) {
         int rows = jdbc_template.update("DELETE FROM events WHERE eventId = ?", id);
         return rows != 0 ? true : false;
     }
