@@ -45,4 +45,6 @@ public interface EventDao {
      * @return the added event
      */
     Event addNewEvent(Event event);
+
+    List<Event> getEventsByOrganizer(int organizerId);
 }
