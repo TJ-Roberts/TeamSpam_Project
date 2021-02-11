@@ -1,132 +1,88 @@
 package com.spam.data;
 
-import com.spam.models.Event;
-
-import com.spam.models.Organizer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
+
+import com.spam.models.Event;
+
 @Repository
 public class EventDaoDB implements EventDao {
 
-    private final JdbcTemplate jdbc;
-
     @Autowired
-    public EventDaoDB(JdbcTemplate jdbc) {
-        this.jdbc = jdbc;
+    private final JdbcTemplate jdbc_template;
+    private SimpleJdbcInsert simpleJdbcInsert;
+
+    public EventDaoDB(JdbcTemplate jdbcTemplate) {
+        jdbc_template = jdbcTemplate;
+        simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("events")
+                .usingGeneratedKeyColumns("eventId");
     }
 
-    public static final class EventMapper implements RowMapper<Event> {
+    private static final class EventMapper implements RowMapper<Event> {
 
         @Override
-        public Event mapRow(ResultSet rs, int index) throws SQLException {
-            Event event = new Event();
-            event.setEventId(rs.getInt("eventId"));
-            event.setLocation(rs.getString("location"));
-            event.setEventTime(rs.getString("eventTime"));
-            event.setEventDate(rs.getString("eventDate"));
-            event.setEventTitle(rs.getString("eventTitle"));
-            event.setDescription(rs.getString("description"));
-            event.setFoodType(rs.getString("foodType"));
-            event.setOrganization(rs.getString("organization"));
-            return event;
+        public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Event newEvent = new Event();
+            newEvent.setEventId(rs.getInt("eventId"));
+            newEvent.setOrganizerId(rs.getInt("organizerId"));
+            newEvent.setEventDate(rs.getString("eventDate"));
+            newEvent.setEventTime(rs.getString("eventTime"));
+            newEvent.setEventTitle(rs.getString("eventTitle"));
+            newEvent.setLocation(rs.getString("location"));
+
+            return newEvent;
         }
     }
 
     @Override
     public List<Event> getAllEvents() {
-        final String SELECT_ALL_EVENTS = "SELECT * FROM events";
-        List<Event> events = jdbc.query(SELECT_ALL_EVENTS, new EventMapper());
-
-        addOrganizerToEvents(events);
-
-        return events;
+        return jdbc_template.query("SELECT * FROM events", new EventMapper());
     }
 
     @Override
     public Event getEventById(int id) {
-        try {
-            final String SELECT_EVENT_BY_ID = "SELECT * FROM events WHERE eventId = ?";
-            Event event = jdbc.queryForObject(SELECT_EVENT_BY_ID, new EventMapper(), id);
-
-            event.setOrganizerId(getOrganizerForEvent(event).getOrganizerId());
-
-            return event;
-        } catch(DataAccessException ex) {
-            return null;
-        }
+        return jdbc_template.queryForObject("SELECT * FROM events WHERE eventId = ?", new EventMapper(), id);
     }
 
     @Override
-    @Transactional
-    public Event addEvent(Event event) {
-        final String INSERT_EVENT = "INSERT INTO events(organizerId, location, eventTime, eventDate, eventTitle, description, foodType, organization) VALUES (?,?,?,?,?,?,?,?)";
-        jdbc.update(INSERT_EVENT,
-                event.getOrganizerId(),
-                event.getLocation(),
-                event.getEventTime(),
-                event.getEventDate(),
-                event.getEventTitle(),
-                event.getDescription(),
-                event.getFoodType(),
-                event.getOrganization());
-
-        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        event.setEventId(newId);
-        return event;
+    public boolean delByInd(int id) {
+        int rows = jdbc_template.update("DELETE FROM events WHERE eventId = ?", id);
+        return rows != 0 ? true : false;
     }
 
     @Override
-    public void updateEvent(Event event) {
-        final String UPDATE_EVENT = "UPDATE events SET organizerId = ?, location = ?, eventTime = ?, eventDate = ?, eventTitle = ?, description = ?, foodType = ?, organization = ?";
-        jdbc.update(UPDATE_EVENT,
-                event.getOrganizerId(),
-                event.getLocation(),
-                event.getEventTime(),
-                event.getEventDate(),
-                event.getEventTitle(),
-                event.getDescription(),
-                event.getFoodType(),
-                event.getOrganization());
+    public boolean updateEvent(Event event) {
+        int rows = jdbc_template.update("UPDATE events "
+                        + "SET location = ?, eventTime = ?, eventDate = ?, eventTitle = ? "
+                        + "WHERE eventId = ?",
+                event.getLocation(), event.getEventTime(),
+                event.getEventDate(), event.getEventTitle(),
+                event.getEventId());
+
+        return rows != 0 ? true : false;
     }
 
     @Override
-    public void deleteEventById(int id) {
-        final String DELETE_EVENT = "DELETE FROM events WHERE eventId = ?";
-        jdbc.update(DELETE_EVENT, id);
-    }
+    public Event addNewEvent(Event event) {
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("location", event.getLocation())
+                .addValue("eventDate", event.getEventDate())
+                .addValue("eventTime", event.getEventTime())
+                .addValue("eventTitle", event.getEventTitle())
+                .addValue("organizerId", event.getOrganizerId());
 
-    @Override
-    public List<Event> getEventsForOrganizer(Organizer organizer) {
-        final String SELECT_EVENTS_FOR_ORGANIZER = "SELECT * FROM events WHERE organizerId = ?";
-        List<Event> events = jdbc.query(SELECT_EVENTS_FOR_ORGANIZER, new EventMapper(), organizer.getOrganizerId());
-
-        addOrganizerToEvents(events);
-
-        return events;
-    }
-
-
-
-    /* * * HELPER FUNCTIONS * * */
-
-    private void addOrganizerToEvents(List<Event> events) {
-        for(Event e : events) {
-            e.setOrganizerId(getOrganizerForEvent(e).getOrganizerId());
-        }
-    }
-
-    private Organizer getOrganizerForEvent(Event event) {
-        final String SELECT_ORGANIZER_FOR_EVENT = "SELECT o.* FROM organizers o "
-                + "INNER JOIN events e ON o.organizerId = e.organizerId WHERE e.eventId = ?";
-        return jdbc.queryForObject(SELECT_ORGANIZER_FOR_EVENT, new OrganizerDaoDB.OrganizerMapper(), event.getEventId());
+        // adds the event and returns the value of the auto_increment column
+        Number id = simpleJdbcInsert.executeAndReturnKey(params);
+        event.setEventId(id.intValue());
+        return event; // event object is returned with the generated id
     }
 }

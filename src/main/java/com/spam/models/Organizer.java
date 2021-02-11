@@ -1,12 +1,16 @@
 package com.spam.models;
 
 public class Organizer {
-    private int organizerId;        // Primary key
-    private String firstName;       // not null
-    private String LastName;        // not null
-    private String membership;      // not null
-    private String role;            // null
-    private String summary;         // null
+
+    int organizerId;
+
+    String firstName;
+    String lastName;
+    String membership;
+
+    public Organizer() {
+
+    }
 
     public int getOrganizerId() {
         return organizerId;
@@ -25,11 +29,11 @@ public class Organizer {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getMembership() {
@@ -38,21 +42,5 @@ public class Organizer {
 
     public void setMembership(String membership) {
         this.membership = membership;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
     }
 }

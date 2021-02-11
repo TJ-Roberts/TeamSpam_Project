@@ -1,13 +1,17 @@
 package com.spam.data;
 
+import org.springframework.stereotype.Repository;
+
 import com.spam.models.Organizer;
 
-import java.util.List;
-
+@Repository
 public interface OrganizerDao {
-    List<Organizer> getAllOrganizers();
-    Organizer getOrganizerById(int id);
-    Organizer addOrganizer(Organizer organizer);
-    void updateOrganizer(Organizer organizer);
-    void deleteOrganizerById(int id);
+
+    /**
+     * Adds the specified organizer to the db
+     * and returns the organizer with the genereated id
+     * @param organizer the organizer to add
+     * @return the added organizer
+     */
+    Organizer addNewOrganizer(Organizer organizer);
 }

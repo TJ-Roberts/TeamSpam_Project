@@ -24,4 +24,6 @@ public class AppController {
     public List<Event> getAllEvents() {
         return eventDao.getAllEvents();
     }
+
+
 }

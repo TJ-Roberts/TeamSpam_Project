@@ -1,15 +1,18 @@
 package com.spam.models;
 
 public class Event {
-    private int eventId;            // Primary key
-    private int organizerId;        // Foreign key
-    private String location;        // not null
-    private String eventTime;       // not null
-    private String eventDate;       // not null
-    private String eventTitle;      // not null
-    private String description;     // null
-    private String foodType;        // null
-    private String organization;    // null
+
+    int eventId;
+    int organizerId;
+
+    String location;
+    String eventTime;
+    String eventDate;
+    String eventTitle;
+
+    public Event () {
+
+    }
 
     public int getEventId() {
         return eventId;
@@ -57,29 +60,5 @@ public class Event {
 
     public void setEventTitle(String eventTitle) {
         this.eventTitle = eventTitle;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFoodType() {
-        return foodType;
-    }
-
-    public void setFoodType(String foodType) {
-        this.foodType = foodType;
-    }
-
-    public String getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(String organization) {
-        this.organization = organization;
     }
 }
