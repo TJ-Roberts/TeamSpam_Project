@@ -3,7 +3,7 @@ package com.spam.models;
 public class Event {
 
 	private int eventId;
-	private int organizerId;
+	private int userId; // created the event
 	
 	private String location;
 	private String eventTime;
@@ -27,12 +27,12 @@ public class Event {
 		this.eventId = eventId;
 	}
 
-	public int getOrganizerId() {
-		return organizerId;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setOrganizerId(int organizerId) {
-		this.organizerId = organizerId;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getLocation() {

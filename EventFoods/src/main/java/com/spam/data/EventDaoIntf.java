@@ -46,5 +46,10 @@ public interface EventDaoIntf {
 	 */
 	Event addNewEvent(Event event);
 	
-	List<Event> getEventsByOrganizer(int organizerId);
+	/**
+	 * Gets all the events created by a specified user
+	 * @param userId the specified user
+	 * @return list of events
+	 */
+	List<Event> getEventsByCreator(int userId);
 }

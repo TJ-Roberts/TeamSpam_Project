@@ -33,7 +33,7 @@ public class EventDao implements EventDaoIntf {
 		public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Event newEvent = new Event();
 			newEvent.setEventId(rs.getInt("eventId"));
-			newEvent.setOrganizerId(rs.getInt("organizerId"));
+			newEvent.setUserId(rs.getInt("userId"));
 			newEvent.setEventDate(rs.getString("eventDate"));
 			newEvent.setEventTime(rs.getString("eventTime"));
 			newEvent.setEventTitle(rs.getString("eventTitle"));
@@ -83,7 +83,7 @@ public class EventDao implements EventDaoIntf {
 				.addValue("eventDate", event.getEventDate())
 		        .addValue("eventTime", event.getEventTime())
 		        .addValue("eventTitle", event.getEventTitle())
-		        .addValue("organizerId", event.getOrganizerId())
+		        .addValue("userId", event.getUserId())
 		        .addValue("description", event.getDescription())
 		        .addValue("foodType", event.getFoodType())
 		        .addValue("organization", event.getOrganization());
@@ -95,8 +95,7 @@ public class EventDao implements EventDaoIntf {
 	}
 
 	@Override
-	public List<Event> getEventsByOrganizer(int organizerId) {
-		return jdbc_template.query("SELECT * FROM events WHERE organizerId = ?", new EventMapper(), organizerId);
+	public List<Event> getEventsByCreator(int userId) {
+		return jdbc_template.query("SELECT * FROM events WHERE userId = ?", new EventMapper(), userId);
 	}
-
 }
