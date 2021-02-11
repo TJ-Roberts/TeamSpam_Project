@@ -27,7 +27,7 @@ public interface EventDao {
      * @param id id of the event to remove
      * @return true if the event was removed, false otherwise
      */
-    boolean delByInd(int id);
+    boolean delById(int id);
 
     /**
      * Updates the specified event with the given information.
@@ -45,4 +45,6 @@ public interface EventDao {
      * @return the added event
      */
     Event addNewEvent(Event event);
+
+    List<Event> getEventsByOrganizer(int organizerId);
 }

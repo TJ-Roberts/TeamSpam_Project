@@ -2,13 +2,18 @@ package com.spam.models;
 
 public class Event {
 
-    int eventId;
-    int organizerId;
+    private int eventId;
+    private int organizerId;
 
-    String location;
-    String eventTime;
-    String eventDate;
-    String eventTitle;
+    private String location;
+    private String eventTime;
+    private String eventDate;
+    private String eventTitle;
+
+    // optional fields
+    private String foodType;
+    private String description;
+    private String organization;
 
     public Event () {
 
@@ -60,5 +65,29 @@ public class Event {
 
     public void setEventTitle(String eventTitle) {
         this.eventTitle = eventTitle;
+    }
+
+    public String getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 }

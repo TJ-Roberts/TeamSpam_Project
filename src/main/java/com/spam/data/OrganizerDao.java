@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 
 import com.spam.models.Organizer;
 
+import java.util.List;
+
 @Repository
 public interface OrganizerDao {
 
@@ -14,4 +16,10 @@ public interface OrganizerDao {
      * @return the added organizer
      */
     Organizer addNewOrganizer(Organizer organizer);
+
+    boolean updateOrganizer(Organizer organizer);
+
+    boolean delById(int id);
+
+    List<Organizer> getAllOrganizers();
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @RestController
@@ -35,5 +36,32 @@ public class AppController {
         }
 
         return ResponseEntity.ok(event);
+    }
+
+    @CrossOrigin
+    @PostMapping("/create/event")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Event createEvent(@RequestBody Event e) {
+        return eventDao.addNewEvent(e);
+    }
+
+    @CrossOrigin
+    @PutMapping("/edit/event/{eventId}")
+    public String editEvent(@RequestBody Event e) {
+        if(eventDao.updateEvent(e)) {
+            return "Changes made";
+        } else {
+            return "No changes made";
+        }
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/delete/event/{eventId}")
+    public String deleteEvent(@PathVariable int eventId) {
+        if(eventDao.delById(eventId)) {
+            return "Event deleted";
+        } else {
+            return "Event not deleted";
+        }
     }
 }

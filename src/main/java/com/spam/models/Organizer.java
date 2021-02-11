@@ -2,11 +2,15 @@ package com.spam.models;
 
 public class Organizer {
 
-    int organizerId;
+    private int organizerId;
 
-    String firstName;
-    String lastName;
-    String membership;
+    private String firstName;
+    private String lastName;
+    private String membership;
+
+    // optional fields
+    private String role;
+    private String summary;
 
     public Organizer() {
 
@@ -42,5 +46,21 @@ public class Organizer {
 
     public void setMembership(String membership) {
         this.membership = membership;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }
