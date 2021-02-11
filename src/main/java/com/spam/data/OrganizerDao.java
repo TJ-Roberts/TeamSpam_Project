@@ -22,4 +22,11 @@ public interface OrganizerDao {
     boolean delById(int id);
 
     List<Organizer> getAllOrganizers();
+
+    /**
+     * Gets the specified event
+     * @param id id of the event
+     * @return the event object
+     */
+    Organizer getOrganizerById(int id);
 }

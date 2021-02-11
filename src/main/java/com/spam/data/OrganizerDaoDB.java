@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.spam.models.Organizer;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class OrganizerDaoDB implements OrganizerDao {
@@ -45,6 +46,7 @@ public class OrganizerDaoDB implements OrganizerDao {
 
 
     @Override
+    @Transactional
     public Organizer addNewOrganizer(Organizer organizer) {
         MapSqlParameterSource params = new MapSqlParameterSource().addValue("firstName", organizer.getFirstName())
                 .addValue("lastName", organizer.getLastName()).addValue("membership", organizer.getMembership())
@@ -72,7 +74,10 @@ public class OrganizerDaoDB implements OrganizerDao {
 
 
     @Override
+    @Transactional
     public boolean delById(int id) {
+        jdbc_template.update("DELETE FROM events WHERE organizerId = ?", id);
+
         int rows = jdbc_template.update("DELETE FROM organizers WHERE organizerId = ?", id);
         return rows != 0 ? true : false;
     }
@@ -81,5 +86,11 @@ public class OrganizerDaoDB implements OrganizerDao {
     @Override
     public List<Organizer> getAllOrganizers() {
         return jdbc_template.query("SELECT * FROM organizers", new OrganizerMapper());
+    }
+
+
+    @Override
+    public Organizer getOrganizerById(int id) {
+        return jdbc_template.queryForObject("SELECT * FROM organizers WHERE organizerId = ?", new OrganizerMapper(), id);
     }
 }

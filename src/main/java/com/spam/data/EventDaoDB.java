@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.spam.models.Event;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class EventDaoDB implements EventDao {
@@ -77,6 +78,7 @@ public class EventDaoDB implements EventDao {
     }
 
     @Override
+    @Transactional
     public Event addNewEvent(Event event) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("location", event.getLocation())
