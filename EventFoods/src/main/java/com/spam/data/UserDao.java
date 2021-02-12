@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -86,8 +87,17 @@ public class UserDao implements UserDaoIntf {
 
 	@Override
 	public User getUserById(int id) {
-		return jdbc_template.queryForObject("SELECT * FROM users WHERE userId = ?", 
-				new UserMapper(), id);
+		try {
+			return jdbc_template.queryForObject("SELECT * FROM users WHERE userId = ?", 
+					new UserMapper(), id);
+			
+		} catch (DataAccessException err) {
+			return null;
+			
+		}
+		
+//		return jdbc_template.queryForObject("SELECT * FROM users WHERE userId = ?", 
+//				new UserMapper(), id);
 	}
 
 	@Override

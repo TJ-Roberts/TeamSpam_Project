@@ -64,4 +64,21 @@ public class User {
 	public void setOrganizer(boolean isOrganizer) {
 		this.isOrganizer = isOrganizer;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+		
+		if (!(obj instanceof User))
+			return false;
+		
+		User tmp = (User)obj;
+		return tmp.getUserId() == userId &&
+				tmp.getFirstName().equals(firstName) &&
+				tmp.getLastName().equals(lastName) &&
+				tmp.isOrganizer == isOrganizer &&
+				(tmp.getRole() == null || tmp.getRole().equals(role)) &&
+				(tmp.getSummary() == null || tmp.getSummary().equals(summary));
+	}
 }

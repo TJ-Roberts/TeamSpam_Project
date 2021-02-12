@@ -90,4 +90,24 @@ public class Event {
 	public void setOrganization(String organization) {
 		this.organization = organization;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+		
+		if(!(obj instanceof Event))
+			return false;
+		
+		Event tmp = (Event)obj;
+		return tmp.getEventId() == eventId &&
+				tmp.getUserId() == userId &&
+				tmp.getLocation().equals(location) &&
+				tmp.getEventTime().equals(eventTime) &&
+				tmp.getEventDate().equals(eventDate) &&
+				tmp.getEventTitle().equals(eventTitle) &&
+				(tmp.getFoodType() == null || tmp.getFoodType().equals(foodType)) &&
+				(tmp.getDescription() == null || tmp.getDescription().equals(description)) &&
+				(tmp.getOrganization() == null || tmp.getOrganization().equals(organization));
+	}
 }
