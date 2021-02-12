@@ -22,7 +22,7 @@ function getIndividualData() //get individual event data from other page
     var header = '<p>';
     header += org + ': ';
     header += title + ' ';
-    header += '(event #' + eventId + ')'; //for testing
+    header += '(event #' + eventId + ')';
     header += '</p>'
 
     eventHeading.append(header);

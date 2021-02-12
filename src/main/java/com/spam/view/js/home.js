@@ -16,7 +16,7 @@ function loadEvents()
             $.each(eventArray, function(index, event)
             {
                 //stringify to be able to display
-                var eventId = JSON.stringify(event.eventId); //for testing
+                var eventId = JSON.stringify(event.eventId);
 
                 var org = JSON.stringify(event.organization);
                 var title = JSON.stringify(event.eventTitle);
@@ -27,7 +27,7 @@ function loadEvents()
                 var box = '<div class="card-body">'
 
                 var event = '<p id="' + eventId + '">'; //is the element id
-                event += 'Event Id: ' + eventId + '<br>'; //for testing
+                event += 'Event Id: ' + eventId + '<br>';
                 event += 'Organization: ' + org + '<br>';
                 event += 'Title: ' + title + '<br>';
                 event += 'Location: ' + location + '<br>';
