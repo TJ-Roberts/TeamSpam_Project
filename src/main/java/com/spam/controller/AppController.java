@@ -1,9 +1,9 @@
 package com.spam.controller;
 
 import com.spam.data.EventDao;
-import com.spam.data.OrganizerDao;
+import com.spam.data.UserDao;
 import com.spam.models.Event;
-import com.spam.models.Organizer;
+import com.spam.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class AppController {
-    private final OrganizerDao organizerDao;
+    private final UserDao userDao;
     private final EventDao eventDao;
 
-    public AppController(OrganizerDao organizerDao, EventDao eventDao) {
-        this.organizerDao = organizerDao;
+    public AppController(UserDao userDao, EventDao eventDao) {
+        this.userDao = userDao;
         this.eventDao = eventDao;
     }
 
@@ -59,40 +59,40 @@ public class AppController {
     @DeleteMapping("/delete/event/{eventId}")
     public String deleteEvent(@PathVariable int eventId) {
         if(eventDao.delById(eventId)) {
-            return "Event deleted";
+            return "Deletion made";
         } else {
-            return "Event not deleted";
+            return "No deletion made";
         }
     }
 
     @CrossOrigin
-    @GetMapping("/organizers")
-    public List<Organizer> getAllOrganizers() {
-        return organizerDao.getAllOrganizers();
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 
     @CrossOrigin
-    @GetMapping("/organizers/{organizerId}")
-    public ResponseEntity<Organizer> getOrganizerById(@PathVariable int organizerId) {
-        Organizer organizer = organizerDao.getOrganizerById(organizerId);
-        if(organizer == null) {
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable int userId) {
+        User user = userDao.getUserById(userId);
+        if(user == null) {
             return new ResponseEntity(null, HttpStatus.NOT_FOUND);
         }
 
-        return ResponseEntity.ok(organizer);
+        return ResponseEntity.ok(user);
     }
 
     @CrossOrigin
-    @PostMapping("/create/organizer")
+    @PostMapping("/create/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public Organizer createOrganizer(@RequestBody Organizer o) {
-        return organizerDao.addNewOrganizer(o);
+    public User createUser(@RequestBody User user) {
+        return userDao.addNewUser(user);
     }
 
     @CrossOrigin
-    @PutMapping("/edit/organizer")
-    public String editOrganizer(@RequestBody Organizer o) {
-        if(organizerDao.updateOrganizer(o)) {
+    @PutMapping("/edit/user")
+    public String editUser(@RequestBody User user) {
+        if(userDao.updateUser(user)) {
             return "Changes made";
         } else {
             return "No changes made";
@@ -100,12 +100,12 @@ public class AppController {
     }
 
     @CrossOrigin
-    @DeleteMapping("/delete/organizer/{organizerId}")
-    public String deleteOrganizer(@PathVariable int organizerId) {
-        if(organizerDao.delById(organizerId)) {
-            return "Organizer deleted";
+    @DeleteMapping("/delete/user/{userId}")
+    public String deleteUser(@PathVariable int userId) {
+        if(userDao.delById(userId)) {
+            return "Deletion made";
         } else {
-            return "Organizer not deleted";
+            return "No deletion made";
         }
     }
 }

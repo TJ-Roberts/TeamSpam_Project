@@ -2,31 +2,31 @@ package com.spam.data;
 
 import org.springframework.stereotype.Repository;
 
-import com.spam.models.Organizer;
+import com.spam.models.User;
 
 import java.util.List;
 
 @Repository
-public interface OrganizerDao {
+public interface UserDao {
 
     /**
      * Adds the specified organizer to the db
      * and returns the organizer with the genereated id
-     * @param organizer the organizer to add
+     * @param user the organizer to add
      * @return the added organizer
      */
-    Organizer addNewOrganizer(Organizer organizer);
+    User addNewUser(User user);
 
-    boolean updateOrganizer(Organizer organizer);
+    boolean updateUser(User user);
 
     boolean delById(int id);
 
-    List<Organizer> getAllOrganizers();
+    List<User> getAllUsers();
 
     /**
      * Gets the specified event
      * @param id id of the event
      * @return the event object
      */
-    Organizer getOrganizerById(int id);
+    User getUserById(int id);
 }

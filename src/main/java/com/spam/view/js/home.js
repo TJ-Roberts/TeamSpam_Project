@@ -1,18 +1,22 @@
 $(document).ready(function () {
-    loadItems();
+    loadEvents();
+    viewEvent();
 });
 
-function loadItems()
+var selectedEvent;
+
+function loadEvents()
 {
- $.ajax({
+    $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/api/events',
-        success: function(eventArray) //array of JSON items
+        success: function(eventArray)
         {
-            var allevents = $('#allevents');
+            var allEvents = $('#allevents');
             $.each(eventArray, function(index, event)
             {
                 //stringify to be able to display
+                var eventId = JSON.stringify(event.eventId); //for testing
 
                 var org = JSON.stringify(event.organization);
                 var title = JSON.stringify(event.eventTitle);
@@ -21,22 +25,72 @@ function loadItems()
                 var time = JSON.stringify(event.eventTime);
 
                 var box = '<div class="card-body">'
-                var event = '<p>';
+
+                var event = '<p id="' + eventId + '">'; //is the element id
+                event += 'Event Id: ' + eventId + '<br>'; //for testing
                 event += 'Organization: ' + org + '<br>';
                 event += 'Title: ' + title + '<br>';
                 event += 'Location: ' + location + '<br>';
                 event += 'Date: ' + date + '<br>';
                 event += 'Time: ' + time + '<br>';
                 event += '</p>';
-                box += event;
-                event += '</div>';
 
-                allevents.append(box);
+                box += event;
+                box += '</div>';
+
+                allEvents.append(box);
+
+                $('#allevents').click(function(event) {
+                    var clickedEvent = JSON.stringify(event.target.id);
+                    var noQuotes = clickedEvent.replace(/"/g,"");
+                    var chosenEventId = parseInt(noQuotes);
+
+                    selectedEvent = chosenEventId; //to put into next url parameter
+                 })
             })
         },
         error: function()
         {
-            alert('Failed to GET from API');
+            alert('Failed to GET events from API');
         }
     })
 }
+
+function viewEvent()
+{
+   $('#allevents').click(function(event){
+        $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/api/events/' + selectedEvent,
+        success: function(eventArray) {
+            //to be able to transfer the data to a different html page
+            var indivInfo = JSON.stringify(eventArray);
+            localStorage.setItem("indivInfo", indivInfo)
+
+            window.location.href = "specific-event.html"; //go to other page
+        },
+        dataType: 'json',
+        error: function() //error happens because needs first click to get selectedEvent
+        {
+            alert('Double-click on the event to view it');
+        }
+        });
+   })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

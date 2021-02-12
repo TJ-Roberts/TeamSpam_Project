@@ -1,9 +1,12 @@
 package com.spam.models;
 
+import java.util.List;
+
 public class Event {
 
     private int eventId;
-    private int organizerId;
+    private User user;
+    private List<User> attendees;
 
     private String location;
     private String eventTime;
@@ -27,12 +30,20 @@ public class Event {
         this.eventId = eventId;
     }
 
-    public int getOrganizerId() {
-        return organizerId;
+    public User getUser() {
+        return user;
     }
 
-    public void setOrganizerId(int organizerId) {
-        this.organizerId = organizerId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<User> getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(List<User> attendees) {
+        this.attendees = attendees;
     }
 
     public String getLocation() {

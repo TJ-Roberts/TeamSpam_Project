@@ -2,6 +2,7 @@ package com.spam.data;
 
 import java.util.List;
 
+import com.spam.models.User;
 import org.springframework.stereotype.Repository;
 
 import com.spam.models.Event;
@@ -46,5 +47,9 @@ public interface EventDao {
      */
     Event addNewEvent(Event event);
 
-    List<Event> getEventsByOrganizer(int organizerId);
+    // Gets a list of events created by this user
+    List<Event> getEventsForCreator(User user);
+
+    // Gets a list of events this user is attending
+    List<Event> getEventsForAttendee(User user);
 }
