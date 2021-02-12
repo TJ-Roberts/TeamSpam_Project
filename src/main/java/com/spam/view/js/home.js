@@ -1,18 +1,18 @@
 $(document).ready(function () {
     loadEvents();
-    //viewEvent();
+    viewEvent();
 });
 
-var selectedEvent; //TODO assign a value to this to use for url later
+var selectedEvent;
 
 function loadEvents()
 {
- $.ajax({
+    $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/api/events',
-        success: function(eventArray) //array of JSON items
+        success: function(eventArray)
         {
-            var allevents = $('#allevents');
+            var allEvents = $('#allevents');
             $.each(eventArray, function(index, event)
             {
                 //stringify to be able to display
@@ -38,14 +38,14 @@ function loadEvents()
                 box += event;
                 box += '</div>';
 
-                allevents.append(box);
+                allEvents.append(box);
 
-                //TODO change id string into int
                 $('#allevents').click(function(event) {
                     var clickedEvent = JSON.stringify(event.target.id);
-                    var chosenEventId = parseInt(clickedEvent); //to change into an int to put into url later
-                    //document.getElementById("test").innerHTML = chosenEventId;
-                    document.getElementById("test").innerHTML = clickedEvent;
+                    var noQuotes = clickedEvent.replace(/"/g,"");
+                    var chosenEventId = parseInt(noQuotes);
+
+                    selectedEvent = chosenEventId;
                  })
             })
         },
@@ -56,20 +56,51 @@ function loadEvents()
     })
 }
 
-/*function viewEvent() //click on an event and go to specific event page
+function viewEvent() //TODO create box for that specific event in its own page
 {
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/api/events/' + chosenEventId,
-        success: function(eventArray)
-        {
-            alert('selectedEvent id: ' + chosenEventId);
+   $('#allevents').click(function(event){
+        $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/api/events/' + selectedEvent,
+        success: function() {
+            alert('Retrieved individual event');
 
 
+
+
+
+
+
+
+
+
+
+
+
+            window.location.href = "specific-event.html";
         },
-        error: function()
+        dataType: 'json',
+        error: function() //have to double-click to avoid this
         {
-            alert('Failed to GET an event from API');
+            alert('Double-click to view a specific event');
         }
-    })
-} */
+        });
+   })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
