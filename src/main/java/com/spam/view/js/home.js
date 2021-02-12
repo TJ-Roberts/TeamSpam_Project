@@ -28,13 +28,13 @@ function loadEvents()
 
                 var event = '<p id="' + eventId + '">'; //is the element id
                 event += 'Event Id: ' + eventId + '<br>'; //for testing
-
                 event += 'Organization: ' + org + '<br>';
                 event += 'Title: ' + title + '<br>';
                 event += 'Location: ' + location + '<br>';
                 event += 'Date: ' + date + '<br>';
                 event += 'Time: ' + time + '<br>';
                 event += '</p>';
+
                 box += event;
                 box += '</div>';
 
@@ -45,7 +45,7 @@ function loadEvents()
                     var noQuotes = clickedEvent.replace(/"/g,"");
                     var chosenEventId = parseInt(noQuotes);
 
-                    selectedEvent = chosenEventId;
+                    selectedEvent = chosenEventId; //to put into next url parameter
                  })
             })
         },
@@ -56,33 +56,23 @@ function loadEvents()
     })
 }
 
-function viewEvent() //TODO create box for that specific event in its own page
+function viewEvent()
 {
    $('#allevents').click(function(event){
         $.ajax({
         type: "GET",
         url: 'http://localhost:8080/api/events/' + selectedEvent,
-        success: function() {
-            alert('Retrieved individual event');
+        success: function(eventArray) {
+            //to be able to transfer the data to a different html page
+            var indivInfo = JSON.stringify(eventArray);
+            localStorage.setItem("indivInfo", indivInfo)
 
-
-
-
-
-
-
-
-
-
-
-
-
-            window.location.href = "specific-event.html";
+            window.location.href = "specific-event.html"; //go to other page
         },
         dataType: 'json',
-        error: function() //have to double-click to avoid this
+        error: function() //error happens because needs first click to get selectedEvent
         {
-            alert('Double-click to view a specific event');
+            alert('Double-click on the event to view it');
         }
         });
    })
