@@ -21,3 +21,10 @@ form input, textarea
 {
     height: 60px; 
 }
+
+.btn
+{
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100px;
+}

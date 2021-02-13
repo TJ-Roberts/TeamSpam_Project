@@ -23,8 +23,8 @@ function editEvent()
                'Accept': 'application/json',
                'Content-Type': 'application/json'
            },
-           'dataType': 'json',
-           success: function() { //TODO fix success/error
+           'dataType': 'text',
+           success: function() {
                alert('Event updated');
            },
            error: function () {
