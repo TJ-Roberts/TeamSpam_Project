@@ -1,6 +1,9 @@
 $(document).ready(function () {
-    getIndividualData(); //TODO delete button
+    getIndividualData();
+    deleteEvent();
 });
+
+var specificEventId;
 
 function getIndividualData() //get individual event data from other page
 {
@@ -40,4 +43,38 @@ function getIndividualData() //get individual event data from other page
     box += info;
     box += '</div>';
     specificEvent.append(box); //create box with info
+
+    specificEventId = eventId; //to use in url
+}
+
+function deleteEvent()
+{
+    $('#delete').click(function(event){
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:8080/api/delete/event/' + specificEventId,
+            success: function() {
+                alert('Event ' + specificEventId + ' deleted');
+            },
+            error: function () {
+                alert('Delete unsuccessful');
+            }
+        });
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

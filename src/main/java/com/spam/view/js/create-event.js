@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 function addEvent()
 {
-    $('#addevent').click(function (event) {
+    $('#addevent').click(function(event) {
         $.ajax({
            type: 'POST',
            url: 'http://localhost:8080/api/create/event',

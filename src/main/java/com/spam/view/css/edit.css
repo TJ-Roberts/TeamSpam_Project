@@ -3,6 +3,14 @@
     text-align: center;
 }
 
+.card-body
+{
+    text-align: center;
+    margin: 50px;
+    border-style: solid;
+    margin-bottom: 15px;
+}
+
 form
 {
     background-color: #f2f2f2;
