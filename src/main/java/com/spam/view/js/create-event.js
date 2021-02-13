@@ -4,12 +4,12 @@ $(document).ready(function () {
 
 function addEvent()
 {
-    $('#addEvent').click(function (event) {
+    $('#addevent').click(function (event) {
         $.ajax({
            type: 'POST',
            url: 'http://localhost:8080/api/create/event',
            data: JSON.stringify({
-                organizerId: $('#orgId').val(),
+                organizerId: $('#orgid').val(),
                 organization: $('#org').val(),
                 eventTitle: $('#title').val(),
                 location: $('#location').val(),
@@ -25,7 +25,7 @@ function addEvent()
            'dataType': 'json',
            success: function() {
                alert('Your event has been created');
-               $('#orgId').val(''),
+               $('#orgid').val(''),
                $('#org').val('');
                $('#title').val('');
                $('#location').val('');
@@ -35,7 +35,7 @@ function addEvent()
                $('#food').val('');
            },
            error: function () {
-                alert('Unable to add new event');
+               alert('Unable to add new event');
            }
         })
     });

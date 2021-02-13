@@ -46,7 +46,7 @@ public class AppController {
     }
 
     @CrossOrigin
-    @PutMapping("/edit/event/{eventId}")
+    @PutMapping("/edit/event")
     public String editEvent(@RequestBody Event e) {
         if(eventDao.updateEvent(e)) {
             return "Changes made";

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    getIndividualData(); //TODO edit and delete button
+    getIndividualData(); //TODO delete button
 });
 
 function getIndividualData() //get individual event data from other page
