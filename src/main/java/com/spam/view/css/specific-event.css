@@ -1,34 +1,71 @@
+body
+{
+    background-color: #DAEDDD; /*light gray/blue*/
+    font-family: "Georgia", Times, serif;
+}
+
+body p
+{
+    color: #484848; /*gray*/
+}
+
 .container h1
 {
     text-align: center;
+    padding: 10px;
+    margin-bottom: 0px;
 }
 
-.card-body
+.container h2
 {
+    color: #484848; /*gray*/
     text-align: center;
-    margin: 50px;
-    border-style: solid;
+    margin-bottom: 10px;
 }
 
-.btn
+#currentdetails
 {
+    background-color:white;
+    text-align: center;
     padding: 10px;
     margin-bottom: 15px;
+
+}
+
+#heading
+{
+    font-size: 25px;
+}
+
+#delete
+{
+    padding: 10px;
+    margin-bottom: 100px;
+}
+
+#edit
+{
+    padding: 10px;
     width: 100px;
+    margin-bottom: 15px;
 }
 
 form
 {
-    background-color: #f2f2f2;
+    background-color: white;
+    color: #484848; /*gray*/
+    border-radius: 1%;
     padding: 20px;
     margin-bottom: 15px;
 }
 
 form input, textarea
 {
+    background-color: #E8E8E8; /*light gray*/
     margin: 10px;
     width: 50%;
     height: 40px;
+    border: none;
 }
 
 

@@ -26,10 +26,10 @@ function loadEvents()
 
                 var box = '<div class="card-body">'
 
-                var event = '<p id="' + eventId + '">'; //is the element id
-                event += 'Event Id: ' + eventId + '<br>';
-                event += 'Organization: ' + org + '<br>';
-                event += 'Title: ' + title + '<br>';
+                var event = '<p id="' + eventId + '">';
+                //event += 'Event Id: ' + eventId + '<br>';
+                //event += 'Organization: ' + org + '<br>';
+                event += title + '<br>';
                 event += 'Location: ' + location + '<br>';
                 event += 'Date: ' + date + '<br>';
                 event += 'Time: ' + time + '<br>';
@@ -45,7 +45,7 @@ function loadEvents()
                     var noQuotes = clickedEvent.replace(/"/g,"");
                     var chosenEventId = parseInt(noQuotes);
 
-                    selectedEvent = chosenEventId; //to put into next url parameter
+                    selectedEvent = chosenEventId; //to put into viewEvent url parameter
                  })
             })
         },

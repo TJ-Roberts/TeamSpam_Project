@@ -24,28 +24,33 @@ function getIndividualData() //get individual event data from other page
     var description = JSON.parse(anEvent).description;
     var theFood = JSON.parse(anEvent).foodType;
 
-    var header = '<p>';
+    var header = '<h1>';
     header += org + ': ';
     header += title + ' ';
     header += '(event #' + eventId + ')';
-    header += '</p>'
+    header += '<h1>'
 
     eventHeading.append(header);
 
-    var box = '<div class="card-body">'
+    var square = '<div id="currentdetails">'
+
+    var squareHeading = '<p id="heading">';
+    squareHeading += 'Current Details' + '<br>';
+    squareHeading += '</p>'
 
     var info = '<p>';
     info += 'Organizer Id: ' + orgId + '<br>';
     info += 'Location: ' + location + '<br>';
     info += 'Date: ' + date + '<br>';
     info += 'Time: ' + time + '<br>';
-    info += 'Details: ' + description + '<br>';
+    info += 'Description: ' + description + '<br>';
     info += 'Available Food: ' + theFood + '<br>';
     info += '</p>';
 
-    box += info;
-    box += '</div>';
-    specificEvent.append(box); //create box with info
+    square += squareHeading;
+    square += info;
+    square += '</div>';
+    specificEvent.append(square); //create box with info
 
     specificEventId = eventId; //to use in edit function
 }
