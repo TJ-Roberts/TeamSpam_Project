@@ -50,3 +50,10 @@ body
     width: 100px;
 }
 
+#goUp
+{
+    margin-right: 30px;
+    margin-bottom: 15px;
+    float: right;
+}
+

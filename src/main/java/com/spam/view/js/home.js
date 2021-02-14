@@ -1,6 +1,7 @@
 $(document).ready(function () {
     loadEvents();
     viewEvent();
+    toTop();
 });
 
 var selectedEvent;
@@ -72,13 +73,19 @@ function viewEvent()
         dataType: 'json',
         error: function()
         {
-            //error happens because needs first click to get selectedEvent
+            //error usally happens because needs first click to get selectedEvent
         }
         });
    })
 }
 
-
+//goes to top of page when button is clicked
+function toTop()
+{
+    $(document).ready(function(){
+    $(window).scrollTop(0);
+    });
+}
 
 
 
