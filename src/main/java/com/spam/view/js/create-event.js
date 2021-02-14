@@ -35,7 +35,7 @@ function addEvent()
                $('#food').val('');
            },
            error: function () {
-               alert('Unable to add new event');
+               alert('Unable to add new event. Please enter your Organizer Id');
            }
         })
     });
