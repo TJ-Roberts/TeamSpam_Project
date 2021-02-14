@@ -9,6 +9,28 @@ body p
     color: #484848; /*gray*/
 }
 
+#navbar
+{
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    background-color: #1b998b; /*green*/
+    height: 100vh;
+    text-align: center;
+}
+
+#navbar p
+{
+    justify-content: center;
+    margin: 15px;
+    font-size: 15px;
+}
+
+#navbar a
+{
+    text-decoration: none;
+    color:white
+}
 .container h1
 {
     text-align: center;
