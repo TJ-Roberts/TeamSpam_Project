@@ -70,9 +70,9 @@ function viewEvent()
             window.location.href = "specific-event.html"; //go to other page
         },
         dataType: 'json',
-        error: function() //error happens because needs first click to get selectedEvent
+        error: function()
         {
-            alert('Double-click on the event to view it');
+            //error happens because needs first click to get selectedEvent
         }
         });
    })

@@ -1,5 +1,6 @@
 $(document).ready(function () {
     getIndividualData();
+    editEvent();
     deleteEvent();
 });
 
@@ -15,6 +16,7 @@ function getIndividualData() //get individual event data from other page
 
     var eventId = JSON.parse(anEvent).eventId;
     var org = JSON.parse(anEvent).organization;
+    var orgId = JSON.parse(anEvent).organizerId; //id of who organized event
     var title = JSON.parse(anEvent).eventTitle;
     var location = JSON.parse(anEvent).location;
     var date = JSON.parse(anEvent).eventDate;
@@ -33,6 +35,7 @@ function getIndividualData() //get individual event data from other page
     var box = '<div class="card-body">'
 
     var info = '<p>';
+    info += 'Organizer Id: ' + orgId + '<br>';
     info += 'Location: ' + location + '<br>';
     info += 'Date: ' + date + '<br>';
     info += 'Time: ' + time + '<br>';
@@ -44,7 +47,39 @@ function getIndividualData() //get individual event data from other page
     box += '</div>';
     specificEvent.append(box); //create box with info
 
-    specificEventId = eventId; //to use in url
+    specificEventId = eventId; //to use in edit function
+}
+
+function editEvent()
+{
+    $('#edit').click(function(event) {
+        $.ajax({
+           type: 'PUT',
+           url: 'http://localhost:8080/api/edit/event',
+           data: JSON.stringify({
+                organizerId: $('#orgid').val(),
+                organization: $('#org').val(),
+                eventId: specificEventId,
+                eventTitle: $('#title').val(),
+                location: $('#location').val(),
+                eventDate: $('#date').val(),
+                eventTime: $('#time').val(),
+                description: $('#description').val(),
+                foodType: $('#food').val()
+           }),
+           headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+           },
+           'dataType': 'text',
+           success: function() {
+               alert('Event updated');
+           },
+           error: function () {
+               alert('Unable to edit event');
+           }
+        })
+    });
 }
 
 function deleteEvent()
@@ -61,20 +96,4 @@ function deleteEvent()
             }
         });
     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

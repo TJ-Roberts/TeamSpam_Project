@@ -17,5 +17,19 @@
     width: 100px;
 }
 
+form
+{
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+form input, textarea
+{
+    margin: 10px;
+    width: 50%;
+    height: 40px;
+}
+
 
 
