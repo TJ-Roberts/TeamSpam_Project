@@ -95,6 +95,7 @@ function deleteEvent()
             url: 'http://localhost:8080/api/delete/event/' + specificEventId,
             success: function() {
                 alert('Event ' + specificEventId + ' deleted');
+                window.location.href = "home.html"; //go back to home after event deleted
             },
             error: function () {
                 alert('Delete unsuccessful');
