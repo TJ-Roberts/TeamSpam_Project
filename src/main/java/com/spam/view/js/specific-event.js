@@ -9,7 +9,7 @@ var specificEventId;
 function getIndividualData() //get individual event data from other page
 {
     var eventHeading = $('#eventheading');
-    var specificEvent = $('#specificevent');
+    var specificEvent = $('#specificeventinfo');
 
     var anEvent = localStorage.getItem("indivInfo");
     localStorage.clear(); //to clean the localStorage

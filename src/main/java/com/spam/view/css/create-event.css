@@ -11,12 +11,12 @@ body
     flex-direction: column;
     background-color: #1b998b; /*green*/
     height: 100vh;
+    /*justify-content: center; */
     text-align: center;
 }
 
 #navbar p
 {
-    justify-content: center;
     margin: 15px;
     font-size: 15px;
     text-transform: uppercase;

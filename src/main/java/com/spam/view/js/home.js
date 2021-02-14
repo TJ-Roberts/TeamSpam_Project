@@ -79,7 +79,7 @@ function viewEvent()
    })
 }
 
-//goes to top of page when To Top button is clicked
+//goes to top of page when goUp button is clicked
 function toTop()
 {
     $(document).ready(function(){

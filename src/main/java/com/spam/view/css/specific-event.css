@@ -16,12 +16,12 @@ body p
     flex-direction: column;
     background-color: #1b998b; /*green*/
     height: 100vh;
+    /*justify-content: center; */
     text-align: center;
 }
 
 #navbar p
 {
-    justify-content: center;
     margin: 15px;
     font-size: 15px;
     text-transform: uppercase;
@@ -32,6 +32,7 @@ body p
     text-decoration: none;
     color:white
 }
+
 .container h1
 {
     text-align: center;
@@ -52,7 +53,6 @@ body p
     text-align: center;
     padding: 10px;
     margin-bottom: 15px;
-
 }
 
 #heading
@@ -63,7 +63,7 @@ body p
 #delete
 {
     padding: 10px;
-    margin-bottom: 100px;
+    margin-bottom: 70px;
 }
 
 #edit
