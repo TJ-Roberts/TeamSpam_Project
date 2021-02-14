@@ -1,5 +1,7 @@
 package com.spam.models;
 
+import java.util.Objects;
+
 public class User {
 
     private int userId;
@@ -63,5 +65,18 @@ public class User {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId && isOrganizer == user.isOrganizer && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(role, user.role) && Objects.equals(summary, user.summary);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, firstName, lastName, isOrganizer, role, summary);
     }
 }

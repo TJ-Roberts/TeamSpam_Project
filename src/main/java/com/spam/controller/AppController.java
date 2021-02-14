@@ -39,30 +39,23 @@ public class AppController {
     }
 
     @CrossOrigin
-    @PostMapping("/create/event")
+    @PostMapping("/create/event/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Event createEvent(@RequestBody Event e) {
-        return eventDao.addNewEvent(e);
+    public Event createEvent(@RequestBody Event event, @PathVariable int userId) {
+        event.setUser(userDao.getUserById(userId));
+        return eventDao.addNewEvent(event);
     }
 
     @CrossOrigin
     @PutMapping("/edit/event")
-    public String editEvent(@RequestBody Event e) {
-        if(eventDao.updateEvent(e)) {
-            return "Changes made";
-        } else {
-            return "No changes made";
-        }
+    public String editEvent(@RequestBody Event event) {
+        return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
     }
 
     @CrossOrigin
     @DeleteMapping("/delete/event/{eventId}")
     public String deleteEvent(@PathVariable int eventId) {
-        if(eventDao.delById(eventId)) {
-            return "Deletion made";
-        } else {
-            return "No deletion made";
-        }
+        return eventDao.delById(eventId) ? "Deletion made" : "No deletion made";
     }
 
     @CrossOrigin
@@ -92,20 +85,36 @@ public class AppController {
     @CrossOrigin
     @PutMapping("/edit/user")
     public String editUser(@RequestBody User user) {
-        if(userDao.updateUser(user)) {
-            return "Changes made";
-        } else {
-            return "No changes made";
-        }
+        return userDao.updateUser(user) ? "Changes made" : "No changes made";
     }
 
     @CrossOrigin
     @DeleteMapping("/delete/user/{userId}")
     public String deleteUser(@PathVariable int userId) {
-        if(userDao.delById(userId)) {
-            return "Deletion made";
-        } else {
-            return "No deletion made";
-        }
+        return userDao.delById(userId) ? "Deletion made" : "No deletion made";
+    }
+
+    @CrossOrigin
+    @PutMapping("/add/attendee/{eventId}/{userId}")
+    public String addAttendee(@PathVariable int eventId, @PathVariable int userId) {
+        Event event = eventDao.getEventById(eventId);
+
+        List<User> attendees = event.getAttendees();
+        attendees.add(userDao.getUserById(userId));
+        event.setAttendees(attendees);
+
+        return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
+    }
+
+    @CrossOrigin
+    @PutMapping("/remove/attendee/{eventId}/{userId}")
+    public String removeAttendee(@PathVariable int eventId, @PathVariable int userId) {
+        Event event = eventDao.getEventById(eventId);
+
+        List<User> attendees = event.getAttendees();
+        attendees.remove(userDao.getUserById(userId));
+        event.setAttendees(attendees);
+
+        return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
     }
 }

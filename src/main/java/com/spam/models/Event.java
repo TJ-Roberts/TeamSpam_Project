@@ -1,6 +1,7 @@
 package com.spam.models;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Event {
 
@@ -100,5 +101,18 @@ public class Event {
 
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return eventId == event.eventId && Objects.equals(user, event.user) && Objects.equals(attendees, event.attendees) && Objects.equals(location, event.location) && Objects.equals(eventTime, event.eventTime) && Objects.equals(eventDate, event.eventDate) && Objects.equals(eventTitle, event.eventTitle) && Objects.equals(foodType, event.foodType) && Objects.equals(description, event.description) && Objects.equals(organization, event.organization);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId, user, attendees, location, eventTime, eventDate, eventTitle, foodType, description, organization);
     }
 }
