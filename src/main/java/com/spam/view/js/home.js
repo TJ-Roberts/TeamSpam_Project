@@ -25,6 +25,8 @@ function loadEvents()
                 var date = JSON.stringify(event.eventDate);
                 var time = JSON.stringify(event.eventTime);
 
+                var attendees = JSON.stringify(event.attendees);
+
                 var box = '<div class="card-body">'
 
                 var event = '<p id="' + eventId + '">';
@@ -86,8 +88,6 @@ function toTop()
         $(window).scrollTop(0);
     });
 }
-
-
 
 
 

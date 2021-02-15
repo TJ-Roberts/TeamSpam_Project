@@ -16,7 +16,7 @@ function getIndividualData() //get individual event data from other page
 
     var eventId = JSON.parse(anEvent).eventId;
     var org = JSON.parse(anEvent).organization;
-    var orgId = JSON.parse(anEvent).organizerId; //id of who organized event
+    var userId = JSON.parse(anEvent).user.userId; //id of who organized event
     var title = JSON.parse(anEvent).eventTitle;
     var location = JSON.parse(anEvent).location;
     var date = JSON.parse(anEvent).eventDate;
@@ -39,7 +39,7 @@ function getIndividualData() //get individual event data from other page
     squareHeading += '</p>'
 
     var info = '<p>';
-    info += 'Organizer Id: ' + orgId + '<br>';
+    info += 'User Id: ' + userId + '<br>';
     info += 'Location: ' + location + '<br>';
     info += 'Date: ' + date + '<br>';
     info += 'Time: ' + time + '<br>';
@@ -60,9 +60,9 @@ function editEvent()
     $('#edit').click(function(event) {
         $.ajax({
            type: 'PUT',
-           url: 'http://localhost:8080/api/edit/event',
+           url: 'http://localhost:8080/api/edit/event/details',
            data: JSON.stringify({
-                organizerId: $('#orgid').val(),
+                userId: 1, //default
                 organization: $('#org').val(),
                 eventId: specificEventId,
                 eventTitle: $('#title').val(),
