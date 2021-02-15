@@ -88,12 +88,14 @@ public class EventDaoDB implements EventDao {
     public boolean updateEvent(Event event) {
         final String UPDATE_EVENT = "UPDATE events "
                 + "SET userId = ?, location = ?, eventTime = ?, eventDate = ?, "
-                + "eventTitle = ?, foodType = ?, description = ?, organization = ?";
+                + "eventTitle = ?, foodType = ?, description = ?, organization = ? "
+                + "WHERE eventId = ?";
         int rows = jdbc_template.update(UPDATE_EVENT,
                 event.getUser().getUserId(), event.getLocation(),
                 event.getEventTime(), event.getEventDate(),
                 event.getEventTitle(), event.getFoodType(),
-                event.getDescription(), event.getOrganization());
+                event.getDescription(), event.getOrganization(),
+                event.getEventId());
 
         final String DELETE_ATTENDEES = "DELETE FROM attending WHERE eventId = ?";
         jdbc_template.update(DELETE_ATTENDEES, event.getEventId());
