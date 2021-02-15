@@ -117,4 +117,15 @@ public class AppController {
 
         return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
     }
+
+    @CrossOrigin
+    @PutMapping("/edit/event/details")
+    public String editEventDetails(@RequestBody Event event) {
+        Event e = eventDao.getEventById(event.getEventId());
+
+        event.setUser(e.getUser());
+        event.setAttendees(e.getAttendees());
+
+        return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
+    }
 }
