@@ -126,25 +126,33 @@ public class EventDaoDB implements EventDao {
 
     @Override
     public List<Event> getEventsForCreator(User user) {
-        final String SELECT_EVENTS_FOR_CREATOR = "SELECT * FROM events WHERE userId = ?";
-        List<Event> events = jdbc_template.query(SELECT_EVENTS_FOR_CREATOR,
-                new EventMapper(), user.getUserId());
+        try {
+            final String SELECT_EVENTS_FOR_CREATOR = "SELECT * FROM events WHERE userId = ?";
+            List<Event> events = jdbc_template.query(SELECT_EVENTS_FOR_CREATOR,
+                    new EventMapper(), user.getUserId());
 
-        addCreatorAndUsersToEvents(events);
+            addCreatorAndUsersToEvents(events);
 
-        return events;
+            return events;
+        } catch(DataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Event> getEventsForAttendee(User user) {
-        final String SELECT_EVENTS_FOR_USER = "SELECT * FROM events e "
-                + "INNER JOIN attending a ON e.eventId = a.eventId WHERE a.userId = ?";
-        List<Event> events = jdbc_template.query(SELECT_EVENTS_FOR_USER,
-                new EventMapper(), user.getUserId());
+        try {
+            final String SELECT_EVENTS_FOR_USER = "SELECT * FROM events e "
+                    + "INNER JOIN attending a ON e.eventId = a.eventId WHERE a.userId = ?";
+            List<Event> events = jdbc_template.query(SELECT_EVENTS_FOR_USER,
+                    new EventMapper(), user.getUserId());
 
-        addCreatorAndUsersToEvents(events);
+            addCreatorAndUsersToEvents(events);
 
-        return events;
+            return events;
+        } catch(DataAccessException ex) {
+            return null;
+        }
     }
 
 

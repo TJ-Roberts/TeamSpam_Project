@@ -128,4 +128,28 @@ public class AppController {
 
         return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
     }
+
+    @CrossOrigin
+    @GetMapping("/events/creator/{userId}")
+    public ResponseEntity<List<Event>> getCreatedEvents(@PathVariable int userId) {
+        List<Event> events = eventDao.getEventsForCreator(userDao.getUserById(userId));
+
+        if(events == null) {
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(events);
+    }
+
+    @CrossOrigin
+    @GetMapping("/events/attendee/{userId}")
+    public ResponseEntity<List<Event>> getAttendingEvents(@PathVariable int userId) {
+        List<Event> events = eventDao.getEventsForAttendee(userDao.getUserById(userId));
+
+        if(events == null) {
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(events);
+    }
 }
