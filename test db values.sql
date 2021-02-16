@@ -81,6 +81,28 @@ insert into attending values (16, 2);
 insert into attending values (3, 4);
 insert into attending values (2, 5);
 insert into attending values (7, 18);
+insert into attending values (11, 29);
+insert into attending values (21, 30);
+insert into attending values (17, 12);
+insert into attending values (5, 8);
+insert into attending values (23, 26);
+insert into attending values (1, 10);
+insert into attending values (29, 8);
+insert into attending values (10, 8);
+insert into attending values (8, 30);
+insert into attending values (18, 29);
+insert into attending values (26, 20);
+insert into attending values (24, 11);
+insert into attending values (16, 16);
+insert into attending values (8, 28);
+insert into attending values (14, 8);
+insert into attending values (30, 5);
+insert into attending values (5, 26);
+insert into attending values (9, 7);
+insert into attending values (4, 2);
+insert into attending values (29, 20);
+insert into attending values (25, 16);
+insert into attending values (5, 17);
 
 
 -- clubs
@@ -91,5 +113,3 @@ insert into clubs values (null, 'Game Club');
 insert into clubs values (null, 'Dance Club');
 insert into clubs values (null, 'Basketball');
 insert into clubs values (null, 'Tennis');
-
--- members
