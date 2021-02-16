@@ -140,4 +140,10 @@ public class AppController {
     public List<Event> getAttendingEvents(@PathVariable int userId) {
         return eventDao.getEventsForAttendee(userDao.getUserById(userId));
     }
+
+    @CrossOrigin
+    @GetMapping("/attendees/{eventId}")
+    public List<User> getAttendees(@PathVariable int eventId) {
+        return eventDao.getEventById(eventId).getAttendees();
+    }
 }
