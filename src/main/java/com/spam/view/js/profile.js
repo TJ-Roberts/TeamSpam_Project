@@ -1,5 +1,8 @@
 $(document).ready(function () {
     getUser();
+    attendingEvents();
+    createdEvents();
+    toTop();
 });
 
 function getUser()
@@ -10,7 +13,7 @@ function getUser()
         success: function(userArray)
         {
             var userInfo = $('#userinfo');
-            var profileName = $('#profilename');
+            var profName = $('#profname');
 
             //stringify to be able to display
             var userId = JSON.stringify(userArray.userId);
@@ -31,9 +34,9 @@ function getUser()
             header += firstName + ' ' + lastName;
             header += '</p>';
 
-            profileName.append(header);
+            profName.append(header);
 
-            var box = '<div class="card-body">';
+            var box = '<div class="card-body" id="profbox">';
 
             var info = '<p>';
             info += 'User Id: ' + userId + '<br>';
@@ -52,4 +55,108 @@ function getUser()
             alert('Failed to get user information');
         }
     })
+}
+
+function attendingEvents()
+{
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/api/events/attendee/' + 1, //1 is default user (organizer) id
+        success: function(eventArray)
+        {
+            var attending = $('#attending');
+
+            //check if user is attending any events
+            if (eventArray === undefined || eventArray.length == 0)
+            {
+                var message = '<p>';
+                message += 'Not attending any events';
+                message += '</p>';
+                attending.append(message);
+            }
+            else
+            {
+                $.each(eventArray, function(index, event)
+                {
+                    //alert('inside second loop');
+
+                    //stringify to be able to display
+                    var eventId = JSON.stringify(event.eventId);
+                    var org = JSON.stringify(event.organization);
+                    var title = JSON.stringify(event.eventTitle);
+                    var location = JSON.stringify(event.location);
+                    var date = JSON.stringify(event.eventDate);
+                    var time = JSON.stringify(event.eventTime);
+
+                    var box = '<div class="card-body">';
+
+                    var event = '<p>';
+                    event += 'Event Id: ' + eventId + '<br>';
+                    event += title + '<br>';
+                    event += 'Location: ' + location + '<br>';
+                    event += 'Date: ' + date + '<br>';
+                    event += 'Time: ' + time + '<br>';
+                    event += '</p>';
+
+                    box += event;
+                    box += '</div>';
+
+                    attending.append(box);
+                })
+            }
+        },
+        error: function()
+        {
+            alert('Failed to get attending events');
+        }
+    })
+}
+
+function createdEvents()
+{
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/api/events/creator/' + 1, //1 is default user (organizer) id
+        success: function(eventArray)
+        {
+            var createdEvents = $('#createdevents');
+            $.each(eventArray, function(index, event)
+            {
+                //stringify to be able to display
+                var eventId = JSON.stringify(event.eventId);
+                var org = JSON.stringify(event.organization);
+                var title = JSON.stringify(event.eventTitle);
+                var location = JSON.stringify(event.location);
+                var date = JSON.stringify(event.eventDate);
+                var time = JSON.stringify(event.eventTime);
+
+                var box = '<div class="card-body">';
+
+                var event = '<p>';
+                event += 'Event Id: ' + eventId + '<br>';
+                event += title + '<br>';
+                event += 'Location: ' + location + '<br>';
+                event += 'Date: ' + date + '<br>';
+                event += 'Time: ' + time + '<br>';
+                event += '</p>';
+
+                box += event;
+                box += '</div>';
+
+                createdEvents.append(box);
+            })
+        },
+        error: function()
+        {
+            alert('Failed to get user events');
+        }
+    })
+}
+
+//goes to top of page when goUp button is clicked
+function toTop()
+{
+    $(document).ready(function(){
+        $(window).scrollTop(0);
+    });
 }

@@ -36,10 +36,33 @@ body
     border-bottom: 1px solid black;
 }
 
-#profilename
+#profname p
 {
+    background-color: #5c374c; /*dark purple*/
+    color:white;
+    font-size: 30px;
+    padding: 10px;
     margin-top: 15px;
     text-align:center;
+}
+
+#profbox
+{
+    background-color: white;
+    text-align: center;
+    margin: 30px;
+    border:none;
+    border-radius: 25px;
+}
+
+#attending
+{
+    margin-bottom: 50px;
+}
+
+#attending p
+{
+    color: #484848; /*gray*/
 }
 
 .card-body
@@ -53,4 +76,17 @@ body
 .card-body p
 {
     color: #484848; /*gray*/
+}
+
+.btn
+{
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100px;
+}
+
+#goUp
+{
+    margin-right: 30px;
+    float: right;
 }
