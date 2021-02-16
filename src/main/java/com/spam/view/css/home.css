@@ -65,7 +65,6 @@ body
     text-align: center;
     margin: 30px;
     border-style: none;
-    border-radius: 1.5%; /*make edges a little round*/
 }
 
 .card-body p

@@ -52,7 +52,6 @@ body
     text-align: center;
     margin: 30px;
     border:none;
-    border-radius: 25px;
 }
 
 #attending
@@ -70,7 +69,6 @@ body
     background-color: white;
     text-align: center;
     margin: 30px;
-    border:ridge;
 }
 
 .card-body p

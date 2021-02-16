@@ -91,5 +91,24 @@ form input, textarea
     border: none;
 }
 
+#attending
+{
+    color: #484848; /*gray*/
+    text-align: left;
+    border-bottom: 1px solid black;
+}
+
+.card-body
+{
+    background-color: white;
+    text-align: center;
+    margin: 30px;
+}
+
+.card-body p
+{
+    color: #484848; /*gray*/
+}
+
 
 

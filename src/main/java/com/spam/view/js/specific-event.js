@@ -2,6 +2,7 @@ $(document).ready(function () {
     getIndividualData();
     editEvent();
     deleteEvent();
+    eventAttendance();
 });
 
 var specificEventId;
@@ -136,5 +137,58 @@ function deleteEvent()
                 alert('Delete unsuccessful');
             }
         });
+    })
+}
+
+function eventAttendance()
+{
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/api/attendees/' + specificEventId,
+        success: function(attendArray)
+        {
+            var attendance = $('#attendance');
+
+            //check if user is attending any events
+            if (attendArray === undefined || attendArray.length == 0)
+            {
+                var message = '<p>';
+                message += 'No attendance';
+                message += '</p>';
+                attendance.append(message);
+            }
+            else
+            {
+                $.each(attendArray, function(index, attendee)
+                {
+                    //alert('inside second loop');
+
+                    //stringify to be able to display
+                    var userId = JSON.stringify(attendee.userId);
+                    var firstN = JSON.stringify(attendee.firstName);
+                    var lastN = JSON.stringify(attendee.lastName);
+
+                    //without quotes
+                    var firstName = firstN.replace(/"/g,"");
+                    var lastName = lastN.replace(/"/g,"");
+
+                    var box = '<div class="card-body">';
+
+                    var detail = '<p>';
+                    detail += 'User Id: ' + userId + '<br>';
+                    detail += 'Name: ' + firstName + ' ' + lastName + '<br>';
+                    detail += '</p>';
+
+                    box += detail;
+                    box += '</div>';
+
+                    attendance.append(box);
+                })
+            }
+        },
+        error: function()
+        {
+            alert('Failed to get attendance');
+        }
     })
 }

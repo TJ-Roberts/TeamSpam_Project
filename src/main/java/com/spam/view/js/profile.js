@@ -123,41 +123,52 @@ function createdEvents()
         success: function(eventArray)
         {
             var createdEvents = $('#createdevents');
-            $.each(eventArray, function(index, event)
+
+            if (eventArray === undefined || eventArray.length == 0)
             {
-                //stringify to be able to display
-                var eventId = JSON.stringify(event.eventId);
+                var message = '<p>';
+                message += 'Did not create any events';
+                message += '</p>';
+                attending.append(message);
+            }
+            else
+            {
+                $.each(eventArray, function(index, event)
+                {
+                 //stringify to be able to display
+                    var eventId = JSON.stringify(event.eventId);
 
-                var org = JSON.stringify(event.organization);
-                var title = JSON.stringify(event.eventTitle);
-                var location = JSON.stringify(event.location);
-                var date = JSON.stringify(event.eventDate);
-                var time = JSON.stringify(event.eventTime);
+                    var org = JSON.stringify(event.organization);
+                    var title = JSON.stringify(event.eventTitle);
+                    var location = JSON.stringify(event.location);
+                    var date = JSON.stringify(event.eventDate);
+                    var time = JSON.stringify(event.eventTime);
 
-                var box = '<div class="card-body">';
+                    var box = '<div class="card-body">';
 
-                var event = '<p id="' + eventId + '">';
-                //event += 'Event Id: ' + eventId + '<br>';
-                //event += 'Organization: ' + org + '<br>';
-                event += title + '<br>';
-                event += 'Location: ' + location + '<br>';
-                event += 'Date: ' + date + '<br>';
-                event += 'Time: ' + time + '<br>';
-                event += '</p>';
+                    var event = '<p id="' + eventId + '">';
+                    //event += 'Event Id: ' + eventId + '<br>';
+                    //event += 'Organization: ' + org + '<br>';
+                    event += title + '<br>';
+                    event += 'Location: ' + location + '<br>';
+                    event += 'Date: ' + date + '<br>';
+                    event += 'Time: ' + time + '<br>';
+                    event += '</p>';
 
-                box += event;
-                box += '</div>';
+                    box += event;
+                    box += '</div>';
 
-                createdEvents.append(box);
+                    createdEvents.append(box);
 
-                $('#createdevents').click(function(event) {
-                    var clickedEvent = JSON.stringify(event.target.id);
-                    var noQuotes = clickedEvent.replace(/"/g,"");
-                    var chosenEventId = parseInt(noQuotes);
+                    $('#createdevents').click(function(event) {
+                        var clickedEvent = JSON.stringify(event.target.id);
+                        var noQuotes = clickedEvent.replace(/"/g,"");
+                        var chosenEventId = parseInt(noQuotes);
 
-                    selectedEvent = chosenEventId; //to put into viewEvent url parameter
+                        selectedEvent = chosenEventId; //to put into viewEvent url parameter
                  })
             })
+            }
         },
         error: function()
         {
