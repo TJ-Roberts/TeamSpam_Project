@@ -24,13 +24,11 @@ function getIndividualData() //get individual event data from other page
     var description = JSON.parse(anEvent).description;
     var theFood = JSON.parse(anEvent).foodType;
 
-    var header = '<h1>';
-    header += org + ': ';
-    header += title + ' ';
-    header += '(event #' + eventId + ')';
-    header += '</h1>'
+    var header = '<div id="header">';
+    header += org + ': ' + title + ' ' + '(event #' + eventId + ')';
+    header += '</div>';
 
-    eventHeading.append(header);
+    eventHeading.append(header); //to here
 
     var square = '<div id="currentdetails">'
 
@@ -38,17 +36,39 @@ function getIndividualData() //get individual event data from other page
     squareHeading += 'Current Details' + '<br>';
     squareHeading += '</p>'
 
-    var info = '<p>';
-    info += 'User Id: ' + userId + '<br>';
-    info += 'Location: ' + location + '<br>';
-    info += 'Date: ' + date + '<br>';
-    info += 'Time: ' + time + '<br>';
-    info += 'Description: ' + description + '<br>';
-    info += 'Available Food: ' + theFood + '<br>';
-    info += '</p>';
+    var user = '<p>';
+    user += 'User Id: ' + userId + '<br>';
+    user += '</p>';
+
+    var theLocation = '<p id="thelocation">';
+    theLocation += 'Location: ' + location + '<br>';
+    theLocation += '</p>';
+
+    var theDate = '<p id="thedate">';
+    theDate += 'Date: ' + date + '<br>';
+    theDate += '</p>';
+
+    var theTime = '<p id="thetime">';
+    theTime += 'Time: ' + time + '<br>';
+    theTime += '</p>';
+
+    var theDescription = '<p id="thedescription">';
+    theDescription += 'Description: ' + description + '<br>';
+    theDescription += '</p>';
+
+    var foodAv = '<p id="foodav">';
+    foodAv += 'Available Food: ' + theFood + '<br>';
+    foodAv += '</p>';
 
     square += squareHeading;
-    square += info;
+    square += user;
+
+    square += theLocation;
+    square += theDate;
+    square += theTime;
+    square += theDescription;
+    square += foodAv;
+
     square += '</div>';
     specificEvent.append(square); //create box with info
 
@@ -78,7 +98,22 @@ function editEvent()
            },
            'dataType': 'text',
            success: function() {
-               alert('Event updated');
+                document.getElementById('eventheading').innerHTML = $('#org').val() + ': ' + $('#title').val() + ' ' + '(event #' + specificEventId + ')';
+                document.getElementById('thelocation').innerHTML = 'Location: ' + $('#location').val();
+                document.getElementById('thedate').innerHTML = 'Date: ' + $('#date').val();
+                document.getElementById('thetime').innerHTML = 'Time: ' + $('#time').val();
+                document.getElementById('thedescription').innerHTML = 'Description: ' + $('#description').val();
+                document.getElementById('foodav').innerHTML = 'Food Available: ' + $('#food').val();
+                alert('Event updated');
+
+                //clear form input
+                $('#org').val('');
+                $('#title').val('');
+                $('#location').val('');
+                $('#date').val('');
+                $('#time').val('');
+                $('#description').val('');
+                $('#food').val('');
            },
            error: function () {
                alert('Unable to edit event');

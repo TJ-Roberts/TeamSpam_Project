@@ -27,7 +27,7 @@ function addEvent()
            'dataType': 'json',
            success: function() {
                alert('Your event has been created');
-               $('#orgid').val(''),
+               $('#orgid').val('');
                $('#org').val('');
                $('#title').val('');
                $('#location').val('');

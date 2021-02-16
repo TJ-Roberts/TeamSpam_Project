@@ -2,6 +2,7 @@ $(document).ready(function () {
     getUser();
     attendingEvents();
     createdEvents();
+    viewEvent();
     toTop();
 });
 
@@ -112,6 +113,8 @@ function attendingEvents()
     })
 }
 
+var selectedEvent;
+
 function createdEvents()
 {
     $.ajax({
@@ -124,6 +127,7 @@ function createdEvents()
             {
                 //stringify to be able to display
                 var eventId = JSON.stringify(event.eventId);
+
                 var org = JSON.stringify(event.organization);
                 var title = JSON.stringify(event.eventTitle);
                 var location = JSON.stringify(event.location);
@@ -132,8 +136,9 @@ function createdEvents()
 
                 var box = '<div class="card-body">';
 
-                var event = '<p>';
-                event += 'Event Id: ' + eventId + '<br>';
+                var event = '<p id="' + eventId + '">';
+                //event += 'Event Id: ' + eventId + '<br>';
+                //event += 'Organization: ' + org + '<br>';
                 event += title + '<br>';
                 event += 'Location: ' + location + '<br>';
                 event += 'Date: ' + date + '<br>';
@@ -144,13 +149,43 @@ function createdEvents()
                 box += '</div>';
 
                 createdEvents.append(box);
+
+                $('#createdevents').click(function(event) {
+                    var clickedEvent = JSON.stringify(event.target.id);
+                    var noQuotes = clickedEvent.replace(/"/g,"");
+                    var chosenEventId = parseInt(noQuotes);
+
+                    selectedEvent = chosenEventId; //to put into viewEvent url parameter
+                 })
             })
         },
         error: function()
         {
-            alert('Failed to get user events');
+            alert('Failed to get user created events');
         }
     })
+}
+
+function viewEvent()
+{
+   $('#createdevents').click(function(event){
+        $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/api/events/' + selectedEvent,
+        success: function(eventArray) {
+            //to be able to transfer the data to a different html page
+            var indivInfo = JSON.stringify(eventArray);
+            localStorage.setItem("indivInfo", indivInfo)
+
+            window.location.href = "specific-event.html"; //go to other page
+        },
+        dataType: 'json',
+        error: function()
+        {
+            //error usually happens because needs first click to get selectedEvent
+        }
+        });
+   })
 }
 
 //goes to top of page when goUp button is clicked
