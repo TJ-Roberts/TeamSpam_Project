@@ -1,5 +1,7 @@
 package com.spam.models;
 
+import java.util.Objects;
+
 public class User {
 
 	private int userId;
@@ -80,5 +82,10 @@ public class User {
 				tmp.isOrganizer == isOrganizer &&
 				(tmp.getRole() == null || tmp.getRole().equals(role)) &&
 				(tmp.getSummary() == null || tmp.getSummary().equals(summary));
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId, firstName, lastName, isOrganizer, role, summary);
 	}
 }

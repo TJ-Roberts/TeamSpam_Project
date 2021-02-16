@@ -1,28 +1,27 @@
 package com.spam.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.spam.data.EventDao;
 import com.spam.data.EventDaoIntf;
 import com.spam.data.UserDaoIntf;
 import com.spam.models.Event;
+import com.spam.models.User;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+// controller integrated from TJ's branch
 
 @RestController
 @RequestMapping("/api")
 public class AppController {
-
-	private final UserDaoIntf organizerDao;
+    private final UserDaoIntf userDao;
     private final EventDaoIntf eventDao;
 
-    public AppController(UserDaoIntf organizerDao, EventDaoIntf eventDao) {
-        this.organizerDao = organizerDao;
+    public AppController(UserDaoIntf userDao, EventDaoIntf eventDao) {
+        this.userDao = userDao;
         this.eventDao = eventDao;
     }
 
@@ -31,7 +30,7 @@ public class AppController {
     public List<Event> getAllEvents() {
         return eventDao.getAllEvents();
     }
-    
+
     @CrossOrigin
     @GetMapping("/events/{eventId}")
     public ResponseEntity<Event> getEventById(@PathVariable int eventId) {
@@ -41,5 +40,96 @@ public class AppController {
         }
 
         return ResponseEntity.ok(event);
+    }
+
+    @CrossOrigin
+    @PostMapping("/create/event/{userId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Event createEvent(@RequestBody Event event, @PathVariable int userId) {
+        event.setUserId(userId);
+        return eventDao.addNewEvent(event);
+    }
+
+    @CrossOrigin
+    @PutMapping("/edit/event")
+    public String editEvent(@RequestBody Event event) {
+        return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/delete/event/{eventId}")
+    public String deleteEvent(@PathVariable int eventId) {
+        return eventDao.delById(eventId) ? "Deletion made" : "No deletion made";
+    }
+
+    @CrossOrigin
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
+    }
+
+    @CrossOrigin
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable int userId) {
+        User user = userDao.getUserById(userId);
+        if(user == null) {
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(user);
+    }
+
+    @CrossOrigin
+    @PostMapping("/create/user")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User createUser(@RequestBody User user) {
+        return userDao.addNewUser(user);
+    }
+
+    @CrossOrigin
+    @PutMapping("/edit/user")
+    public String editUser(@RequestBody User user) {
+        return userDao.updateUser(user) ? "Changes made" : "No changes made";
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/delete/user/{userId}")
+    public String deleteUser(@PathVariable int userId) {
+        return userDao.delById(userId) ? "Deletion made" : "No deletion made";
+    }
+
+    @CrossOrigin
+    @PutMapping("/add/attendee/{eventId}/{userId}")
+    public String addAttendee(@PathVariable int eventId, @PathVariable int userId) {
+        Event event = eventDao.getEventById(eventId);
+
+        List<User> attendees = event.getAttending();
+        attendees.add(userDao.getUserById(userId));
+        event.setAttending(attendees);
+
+        return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
+    }
+
+    @CrossOrigin
+    @PutMapping("/remove/attendee/{eventId}/{userId}")
+    public String removeAttendee(@PathVariable int eventId, @PathVariable int userId) {
+        Event event = eventDao.getEventById(eventId);
+
+        List<User> attendees = event.getAttending();
+        attendees.remove(userDao.getUserById(userId));
+        event.setAttending(attendees);
+
+        return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
+    }
+
+    @CrossOrigin
+    @PutMapping("/edit/event/details")
+    public String editEventDetails(@RequestBody Event event) {
+        Event e = eventDao.getEventById(event.getEventId());
+        
+        event.setUserId(e.getUserId());
+        event.setAttending(e.getAttending());
+
+        return eventDao.updateEvent(event) ? "Changes made" : "No changes made";
     }
 }

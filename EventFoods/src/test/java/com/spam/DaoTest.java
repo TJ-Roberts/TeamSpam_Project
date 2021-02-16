@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.mysql.cj.xdevapi.JsonArray;
 import com.spam.data.EventDao;
 import com.spam.data.UserDao;
 import com.spam.models.Event;
@@ -31,7 +32,6 @@ public class DaoTest {
 	
 	@Before
 	public void setup() throws Exception {
-		// TODO: clean up tables
 		List<Event> events = eventDao.getAllEvents();
 		for (Event event : events) {
 			eventDao.delById(event.getEventId());
@@ -119,6 +119,11 @@ public class DaoTest {
 		assertEquals(userDao.getAllUsers().size(), 2);
 	}
 	
+	@Test
+	public void testGetEmptyUsersList() {
+		assertEquals(userDao.getAllUsers().size(), 0);
+	}
+	
 	// test eventDao
 	@Test
 	public void testAddEvent() {
@@ -162,5 +167,10 @@ public class DaoTest {
 		eventDao.addNewEvent(makeEvent(ev.getUserId()));
 		
 		assertEquals(eventDao.getEventsByCreator(ev.getUserId()).size(), 2);
+	}
+	
+	@Test
+	public void getEmptyEventsList() {
+		assertEquals(eventDao.getAllEvents().size(), 0);
 	}
 }

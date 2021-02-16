@@ -43,11 +43,4 @@ public interface UserDaoIntf {
 	 * @return the specified user
 	 */
 	User getUserById(int id);
-	
-	/**
-	 * Gets a list of all users that will attend the specified event
-	 * @param eventId the specified event
-	 * @return list of users going to the event
-	 */
-	List<User> getAttendingUsers(int eventId);
 }

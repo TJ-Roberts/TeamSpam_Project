@@ -1,5 +1,9 @@
 package com.spam.models;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class Event {
 
 	private int eventId;
@@ -14,6 +18,8 @@ public class Event {
 	private String foodType;
 	private String description;
 	private String organization;
+	
+	private List<User> attending;
 	
 	public Event () {
 		
@@ -91,6 +97,25 @@ public class Event {
 		this.organization = organization;
 	}
 	
+	public List<User> getAttending() {
+		if (attending == null)
+			attending = new ArrayList<User>();
+		
+		return attending;
+	}
+
+	public void setAttending(List<User> attending) {
+		this.attending = attending;
+	}
+	
+	public void appendAttendee(User user) {
+		attending.add(user);
+	}
+	
+	public void remAttendee(User user) {
+		attending.remove(user);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this)
@@ -110,4 +135,9 @@ public class Event {
 				(tmp.getDescription() == null || tmp.getDescription().equals(description)) &&
 				(tmp.getOrganization() == null || tmp.getOrganization().equals(organization));
 	}
+	
+	@Override
+    public int hashCode() {
+        return Objects.hash(eventId, userId, attending, location, eventTime, eventDate, eventTitle, foodType, description, organization);
+    }
 }
