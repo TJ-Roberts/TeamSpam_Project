@@ -25,9 +25,7 @@ function loadEvents()
                 var date = JSON.stringify(event.eventDate);
                 var time = JSON.stringify(event.eventTime);
 
-                var attendees = JSON.stringify(event.attendees);
-
-                var box = '<div class="card-body">'
+                var box = '<div class="card-body">';
 
                 var event = '<p id="' + eventId + '">';
                 //event += 'Event Id: ' + eventId + '<br>';
@@ -54,7 +52,7 @@ function loadEvents()
         },
         error: function()
         {
-            alert('Failed to GET events from API');
+            alert('Failed to get events from API');
         }
     })
 }

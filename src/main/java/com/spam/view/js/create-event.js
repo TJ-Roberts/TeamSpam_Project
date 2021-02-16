@@ -4,7 +4,6 @@ $(document).ready(function () {
 
 function addEvent()
 {
-
     var attendeesArray = [];
 
     $('#addevent').click(function(event) {

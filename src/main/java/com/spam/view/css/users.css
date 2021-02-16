@@ -1,0 +1,78 @@
+body
+{
+    background-color: #DAEDDD; /*light gray/blue*/
+    font-family: "Georgia", Times, serif;
+}
+
+#navbar
+{
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    background-color: #1b998b; /*green*/
+    height: 100vh;
+    /*justify-content: center; */
+    text-align: center;
+}
+
+#navbar p
+{
+    margin: 15px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+#navbar a
+{
+    text-decoration: none;
+    color:white
+}
+
+.container
+{
+    margin-bottom: 15px;
+}
+
+#headings
+{
+    overflow:hidden;
+    position:sticky;
+    top:0;
+}
+
+#headings h1
+{
+    background-color: #e76f51; /**/
+    text-align: center;
+    color: white;
+    padding: 10px;
+    margin: 0px;
+}
+
+.card-body
+{
+    background-color: white;
+    text-align: center;
+    margin: 30px;
+    border-style: none;
+    border-radius: 1.5%; /*make edges a little round*/
+}
+
+.card-body p
+{
+    color: #484848; /*gray*/
+}
+
+.btn
+{
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100px;
+}
+
+#goUp
+{
+    margin-right: 30px;
+    float: right;
+}
+

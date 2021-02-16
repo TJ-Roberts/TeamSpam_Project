@@ -1,0 +1,56 @@
+body
+{
+    background-color: #DAEDDD; /*light gray/blue*/
+    font-family: "Georgia", Times, serif;
+}
+
+#navbar
+{
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    background-color: #1b998b; /*green*/
+    height: 100vh;
+    /*justify-content: center; */
+    text-align: center;
+}
+
+#navbar p
+{
+    margin: 15px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+#navbar a
+{
+    text-decoration: none;
+    color:white
+}
+
+.container h1
+{
+    text-align:left;
+    color: #484848; /*dark gray*/
+    font-size: 25px;
+    border-bottom: 1px solid black;
+}
+
+#profilename
+{
+    margin-top: 15px;
+    text-align:center;
+}
+
+.card-body
+{
+    background-color: white;
+    text-align: center;
+    margin: 30px;
+    border:ridge;
+}
+
+.card-body p
+{
+    color: #484848; /*gray*/
+}
