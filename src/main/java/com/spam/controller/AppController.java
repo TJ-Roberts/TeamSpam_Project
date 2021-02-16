@@ -131,25 +131,13 @@ public class AppController {
 
     @CrossOrigin
     @GetMapping("/events/creator/{userId}")
-    public ResponseEntity<List<Event>> getCreatedEvents(@PathVariable int userId) {
-        List<Event> events = eventDao.getEventsForCreator(userDao.getUserById(userId));
-
-        if(events == null) {
-            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
-        }
-
-        return ResponseEntity.ok(events);
+    public List<Event> getCreatedEvents(@PathVariable int userId) {
+        return eventDao.getEventsForCreator(userDao.getUserById(userId));
     }
 
     @CrossOrigin
     @GetMapping("/events/attendee/{userId}")
-    public ResponseEntity<List<Event>> getAttendingEvents(@PathVariable int userId) {
-        List<Event> events = eventDao.getEventsForAttendee(userDao.getUserById(userId));
-
-        if(events == null) {
-            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
-        }
-
-        return ResponseEntity.ok(events);
+    public List<Event> getAttendingEvents(@PathVariable int userId) {
+        return eventDao.getEventsForAttendee(userDao.getUserById(userId));
     }
 }
