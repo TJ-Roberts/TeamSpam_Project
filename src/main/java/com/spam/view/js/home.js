@@ -1,6 +1,8 @@
 $(document).ready(function () {
     loadEvents();
     viewEvent();
+    getAttendEvent();
+    attendEvent();
     toTop();
 });
 
@@ -28,7 +30,7 @@ function loadEvents()
                 var box = '<div class="card-body">';
 
                 var event = '<p id="' + eventId + '">';
-                //event += 'Event Id: ' + eventId + '<br>';
+                event += 'Event Id: ' + eventId + '<br>';
                 //event += 'Organization: ' + org + '<br>';
                 event += title + '<br>';
                 event += 'Location: ' + location + '<br>';
@@ -77,6 +79,34 @@ function viewEvent()
         }
         });
    })
+}
+
+var eventJoin;
+
+function getAttendEvent() //gets the input to use in url in attendEvent
+{
+    $('#attendevent').click(function()
+    {
+        eventJoin = $('#theevent').val();
+    });
+}
+
+function attendEvent()
+{
+    $('#attendevent').click(function() {
+        $.ajax({
+           type: 'PUT',
+           url: 'http://localhost:8080/api/add/attendee/' + eventJoin + '/' + 1,
+           success: function() {
+                //clear form input
+                $('#theevent').val('');
+                alert('You joined this event');
+           },
+           error: function () {
+               alert('Unable to attend event');
+           }
+        })
+    });
 }
 
 //goes to top of page when goUp button is clicked

@@ -27,7 +27,7 @@
 
         <div class="container">
             <div id="headings">
-                <h1>Campus Events</h1>
+                <h1>Campus Eatvents</h1>
                 <h2>Double-click on an event to view the event details</h2>
             </div>
 
@@ -35,8 +35,21 @@
                 <!-- All events go here -->
             </div>
 
-            <div class="text-center">
-                <button type="button" class="btn btn-primary" onclick="document.location='create-event.html'">Add Event</button>
+            <div id="goavent">
+                <h1>Attend An Event</h1>
+
+                <!-- Small form to attend event -->
+
+                <form>
+                    <label for="theevent">Event Id:</label>
+                    <br>
+                    <input type="text" id="theevent" placeholder="e.g. 1">
+                </form>
+
+
+                <div class="text-center">
+                    <button id="attendevent" type="button" class="btn btn-primary">Submit</button>
+                </div>
             </div>
         </div>
 

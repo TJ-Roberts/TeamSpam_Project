@@ -85,3 +85,27 @@ body
     float: right;
 }
 
+#goavent h1
+{
+    text-align:center;
+    font-size: 30px;
+}
+
+form
+{
+    background-color: white;
+    color: #484848; /*gray*/
+    border:solid;
+    border-width:thin;
+    border-radius: 1%;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+form input
+{
+    background-color: #E8E8E8; /*light gray*/
+    width: 50%;
+    height: 40px;
+    border: none;
+}
