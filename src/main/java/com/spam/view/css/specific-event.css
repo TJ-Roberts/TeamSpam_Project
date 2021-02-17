@@ -110,5 +110,18 @@ form input, textarea
     color: #484848; /*gray*/
 }
 
+.btn
+{
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100px;
+}
+
+#goUp
+{
+    margin-right: 30px;
+    float: right;
+}
+
 
 

@@ -103,7 +103,7 @@ function attendEvent()
                 alert('You joined this event');
            },
            error: function () {
-               alert('Unable to attend event');
+               alert('Unable to attend event'); //if already attending event that can't add again
            }
         })
     });

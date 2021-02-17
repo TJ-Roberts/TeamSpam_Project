@@ -3,6 +3,7 @@ $(document).ready(function () {
     editEvent();
     deleteEvent();
     eventAttendance();
+    toTop();
 });
 
 var specificEventId;
@@ -191,4 +192,12 @@ function eventAttendance()
             alert('Failed to get attendance');
         }
     })
+}
+
+//goes to top of page when goUp button is clicked
+function toTop()
+{
+    $(document).ready(function(){
+        $(window).scrollTop(0);
+    });
 }
