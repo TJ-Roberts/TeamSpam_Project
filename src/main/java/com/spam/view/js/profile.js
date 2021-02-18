@@ -2,7 +2,8 @@ $(document).ready(function () {
     getUser();
     attendingEvents();
     createdEvents();
-    viewEvent();
+    viewAttendingEvent();
+    viewCreatedEvent();
     toTop();
 });
 
@@ -58,6 +59,9 @@ function getUser()
     })
 }
 
+var selectedAttendingEvent;
+var selectedCreatedEvent;
+
 function attendingEvents()
 {
     $.ajax({
@@ -79,8 +83,6 @@ function attendingEvents()
             {
                 $.each(eventArray, function(index, event)
                 {
-                    //alert('inside second loop');
-
                     //stringify to be able to display
                     var eventId = JSON.stringify(event.eventId);
                     var org = JSON.stringify(event.organization);
@@ -91,7 +93,7 @@ function attendingEvents()
 
                     var box = '<div class="card-body">';
 
-                    var event = '<p>';
+                    var event = '<p id="' + eventId + '">';
                     event += 'Event Id: ' + eventId + '<br>';
                     event += title + '<br>';
                     event += 'Location: ' + location + '<br>';
@@ -103,6 +105,15 @@ function attendingEvents()
                     box += '</div>';
 
                     attending.append(box);
+
+                    $('#attending').click(function(event) {
+                        var clickedEvent = JSON.stringify(event.target.id);
+
+                        var noQuotes = clickedEvent.replace(/"/g,"");
+                        var chosenEventId = parseInt(noQuotes);
+
+                        selectedAttendingEvent = chosenEventId; //to put into viewEvent url parameter
+                    })
                 })
             }
         },
@@ -112,8 +123,6 @@ function attendingEvents()
         }
     })
 }
-
-var selectedEvent;
 
 function createdEvents()
 {
@@ -165,9 +174,9 @@ function createdEvents()
                         var noQuotes = clickedEvent.replace(/"/g,"");
                         var chosenEventId = parseInt(noQuotes);
 
-                        selectedEvent = chosenEventId; //to put into viewEvent url parameter
-                 })
-            })
+                        selectedCreatedEvent = chosenEventId; //to put into viewEvent url parameter
+                    })
+                })
             }
         },
         error: function()
@@ -177,16 +186,38 @@ function createdEvents()
     })
 }
 
-function viewEvent()
+function viewAttendingEvent()
+{
+   $('#attending').click(function(event){
+        $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/api/events/' + selectedAttendingEvent,
+        success: function(eventArray) {
+            //to be able to transfer the data to a different html page
+            var indivInfo = JSON.stringify(eventArray);
+            localStorage.setItem("indivInfo", indivInfo);
+
+            window.location.href = "specific-event.html"; //go to other page
+        },
+        dataType: 'json',
+        error: function()
+        {
+            //error usually happens because needs first click to get selectedEvent
+        }
+        });
+   })
+}
+
+function viewCreatedEvent()
 {
    $('#createdevents').click(function(event){
         $.ajax({
         type: "GET",
-        url: 'http://localhost:8080/api/events/' + selectedEvent,
+        url: 'http://localhost:8080/api/events/' + selectedCreatedEvent,
         success: function(eventArray) {
             //to be able to transfer the data to a different html page
             var indivInfo = JSON.stringify(eventArray);
-            localStorage.setItem("indivInfo", indivInfo)
+            localStorage.setItem("indivInfo", indivInfo);
 
             window.location.href = "specific-event.html"; //go to other page
         },
